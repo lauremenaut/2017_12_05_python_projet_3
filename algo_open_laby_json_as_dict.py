@@ -24,9 +24,10 @@ with open("labyrinth0.json", 'r') as f:
             pass
         for character in character_value: # renvoie la chaîne contenant le caractère
             pass
+# Mes 2 "for" ne servent qu'à définir les variable position_tuple et character, comment faire autrement ?
         laby[position_tuple] = character
         i += 1
-    print(laby)
+    print(laby.values())
 
 # liste les positions disponibles
 available_positions = []

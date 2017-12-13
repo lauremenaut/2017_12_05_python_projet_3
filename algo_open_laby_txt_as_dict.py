@@ -18,7 +18,7 @@ with open("labyrinth1.txt", 'r') as f:
             laby[position] = character
             y += 1
         x += 1
-    print(laby)
+    print(laby.values())
 
 
 """ Random choice of positions for 3 objects in the labyrinth """

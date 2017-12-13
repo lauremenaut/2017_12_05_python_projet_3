@@ -1,4 +1,10 @@
-""" Open a labyrinth file as a list of lists """
+"""
+Open a labyrinth .txt file as a list of lists
+and choose random available positions for 3 objects
+
+"""
+
+import random
 
 with open("labyrinth1.txt", 'r') as f:
     lines = f.readlines()
@@ -10,22 +16,16 @@ with open("labyrinth1.txt", 'r') as f:
         lines_list.append(characters) # "lines_list" contient tous les lignes de "characters"
     print(lines_list) # "lines_list" est une liste de listes
 
+# liste les positions disponibles
+available_positions = []
+for line in lines_list:
+    for character in line:
+        if character == " ":
+            position_x = lines_list.index(line)
+            position_y = line.index(character)
+            available_positions.append((position_x, position_y))
+print(available_positions) # Les positions affichées n'ont pas le bon "y" ...
 
-
-""" Random choice of positions for 3 objects in the labyrinth """
-
-""" Pas pratique, il faudrait récupérer les index des positions choisies, plutôt
- que leur contenu : comment faire ? - Non terminé. """
-
-import random
-
-random_lines = random.choices(lines_list, k=3)
-objects_positions = []
-object_position = "X"
-while object_position != " ":
-    for line in random_lines:
-        object_position = random.choice(line)
-        if object_position == " ":
-            objects_positions.append(object_position)
-            continue
+# choisit 3 positions parmi les positions disponibles, sans doublon
+objects_positions = random.sample(available_positions, 3)
 print("Objects positions : {}".format(objects_positions))
