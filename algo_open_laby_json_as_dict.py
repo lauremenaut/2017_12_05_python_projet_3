@@ -27,7 +27,18 @@ with open("labyrinth0.json", 'r') as f:
 # Mes 2 "for" ne servent qu'à définir les variable position_tuple et character, comment faire autrement ?
         laby[position_tuple] = character
         i += 1
-    print(laby.values())
+print(laby)
+
+# -tc- Je pense qu'une liste de liste serait plus naturelle dans le fichier json.
+# -tc- toutefois pour ton problème actuel, je ferais:
+with open("labyrinth0.json") as f:
+    elements = json.load(f)
+
+laby = {}
+for elem in elements:
+    for key, value in elem.items():
+        laby[key] = value
+print(laby)
 
 # liste les positions disponibles
 available_positions = []
