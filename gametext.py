@@ -20,20 +20,20 @@ from position import *
 
 class GameText:
     def __init__(self):
-        labyrinth = Labyrinth()
-        macgyver = MacGyver(labyrinth)
-        guard = Guard() # à supprimer ?
-        syringe = Syringe(labyrinth)
+        self.labyrinth = Labyrinth()
+        self.macgyver = MacGyver(self.labyrinth)
+        self.syringe = Syringe(self.labyrinth)
+        # self.guard = Guard() # à supprimer ?
 
     def start(self):
         continuer = True
         print("Help MacGyver to escape from the labyrinth : he needs to pick \
-    up a needle, a tube and ether before fighting the guard !")
+up a needle, a tube and ether before fighting the guard !")
         while continuer:
             self.labyrinth.display()
             user_answer = input("In which direction do you want MacGyver to \
-    move ? Please enter 'u' for up, 'd' for down, 'l' for left and 'r' for \
-    right, or 'q' to quit : ")
+move ? Please enter 'u' for up, 'd' for down, 'l' for left and 'r' for \
+right, or 'q' to quit : ")
             if user_answer not in ["q", "u", "d", "l", "r"]:
                 print("Invalid choice !")
                 continue
