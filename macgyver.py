@@ -12,38 +12,43 @@ class MacGyver(Position):
 
     def __init__(self, labyrinth):
         self.labyrinth = labyrinth
-        self.position = self.labyrinth.get_position()
+        self.position = self.labyrinth.get_macgyver_position()
         super().__init__(self.position)
         self.picked_items = 0
 
     def move(self, direction):
         if direction == "u":
             next_position = self.up()
-            print("Up !")
         elif direction == "d":
             next_position = self.down()
-            print("Down !")
         elif direction == "l":
             next_position = self.left()
-            print("Left !")
         elif direction == "r":
             next_position = self.right()
-            print("Right !")
 
-        if self.labyrinth.is_available(next_position):
-            self.position = next_position
-            print("Available !")
-        elif self.labyrinth.is_an_item(next_position):
-            self.position = next_position
-            self.pick_up_item()
-            print("Item !")
-        elif self.labyrinth.is_the_guard(next_position):
-            self.position = next_position
+        if self.labyrinth.near_the_guard(next_position):
+            self.step(next_position)
             self.fight_guard()
-            print("Guard !!!")
-        else:
+        elif self.labyrinth.is_available(next_position):
+            self.step(next_position)
+        elif self.labyrinth.is_an_item(next_position):
+            self.step(next_position)
+            self.pick_up_item()
+        else: # il faut ramener next_position d'une position en arrière
             print("MacGyver can't move in this direction !")
-        return self.position
+            if direction == "u":
+                next_position = self.down()
+            elif direction == "d":
+                next_position = self.up()
+            elif direction == "l":
+                next_position = self.right()
+            elif direction == "r":
+                next_position = self.left()
+
+    def step(self, next_position):
+        self.labyrinth.lines_list[next_position[0]][next_position[1]] = "M"
+        self.labyrinth.lines_list[self.position[0]][self.position[1]] = " "
+        self.position = next_position
 
     def pick_up_item(self):
         self.picked_items += 1
@@ -69,7 +74,7 @@ def main():
     print("New position : {}".format(macgyver.position)) # renvoie (2, 2)
     macgyver.move("d")
     print("New position : {}".format(macgyver.position)) # renvoie (3, 2)
-    for i in range(12):
+    for i in range(11):
         macgyver.move("r")
     print("New position : {}".format(macgyver.position))
 
@@ -78,11 +83,11 @@ def main():
     macgyver = MacGyver(labyrinth)
     print("Starting position : {}".format(macgyver.position)) # renvoie (1, 0)
     macgyver.move("r")
-    print("New position : {}".format(macgyver.position)) # ça ne marche pas !!
-    macgyver.move("l")
-    print("New position : {}".format(macgyver.position)) # 
+    print("New position : {}".format(macgyver.position)) # renvoie (1, 1)
+    macgyver.move("u")
+    print("New position : {}".format(macgyver.position)) # renvoie "Can't move" (1, 1) 
     macgyver.move("r")
-    print("New position : {}".format(macgyver.position)) # 
+    print("New position : {}".format(macgyver.position)) # renvoie (1, 2) 
 
 if __name__ == "__main__":
     main()
