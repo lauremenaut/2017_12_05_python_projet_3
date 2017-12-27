@@ -1,22 +1,20 @@
 """ Defines Guard class
 
-This is a child class of Positionable.
+This is a child class of Position.
 
 """
 
-from positionable import *
+#from position import *
 
 
-class Guard(Positionable):
-    def __init__(self, position):
-        super().__init__(position)
-
-    def block_exit(self):
+class Guard(): # enlevé Position
+    def __init__(self):
         pass
+        #super().__init__()
 
 
 def main():
-    pass
+    guard = Guard()
 
 if __name__ == "__main__":
     main()
