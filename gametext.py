@@ -3,43 +3,49 @@
 
 """ Defines GameText class
 
-This class manages the "textual version" of the game "Help MacGyver to escape
-from the labyrinth !"
-McGyver needs to find and pick up 3 items (a needle, a small plastic tube and
-ether) in the labyrinth before neutralizing the guard and being able to escape.
+This class manages the "textual version" of the game "Help MacGyver to
+escape from the labyrinth !"
+McGyver needs to find and pick up 3 items (a needle, a small plastic
+tube and ether) in the labyrinth before neutralizing the guard and being
+able to escape.
 
 """
 
 from labyrinth import *
 from macgyver import *
 from guard import *
-from item import *
+from syringe import *
 from position import *
 
 
 class GameText:
     def __init__(self):
-        labyrinth = Labyrinth(file(?))
-        macgyver = MacGyver(position, labyrinth(?))
-        guard = Guard(position)
-        needle = Item(position)
-        tube = Item(position)
-        ether = Item(position)
+        labyrinth = Labyrinth()
+        macgyver = MacGyver(labyrinth)
+        guard = Guard() # à supprimer ?
+        syringe = Syringe(labyrinth)
 
     def start(self):
-        pass # boucle qui affiche le laby, pose question à l'utilisateur ...
-        # boucle jusqu'à la fin du jeu (while True / break ou variable "continuer" True > False)
-
-    """    
-        if "q"
-            if h b d g: # saisie sécurisée pour reposer la question si invalide
-                self.mcgyver(move, reponse) # doit savoir si dispo, objets = besoin de Labyrinth
-# après déplacement, maj position McG
-    """
+        continuer = True
+        print("Help MacGyver to escape from the labyrinth : he needs to pick \
+    up a needle, a tube and ether before fighting the guard !")
+        while continuer:
+            self.labyrinth.display()
+            user_answer = input("In which direction do you want MacGyver to \
+    move ? Please enter 'u' for up, 'd' for down, 'l' for left and 'r' for \
+    right, or 'q' to quit : ")
+            if user_answer not in ["q", "u", "d", "l", "r"]:
+                print("Invalid choice !")
+                continue
+            elif user_answer == "q":
+                continuer = False
+            else:
+                self.macgyver.move(user_answer)
 
 
 def main():
-    pass
+    game = GameText()
+    game.start()
 
 if __name__ == "__main__":
     main()
