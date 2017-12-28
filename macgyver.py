@@ -1,11 +1,7 @@
-""" Defines MacGyver class
+""" Defines MacGyver class, as a child class of Position class."""
 
-This is a child class of Position.
-
-"""
-
-from position import *
-from labyrinth import *
+from position import Position
+from labyrinth import Labyrinth
 
 
 class MacGyver(Position):
@@ -14,7 +10,7 @@ class MacGyver(Position):
         self.labyrinth = labyrinth
         self.position = self.labyrinth.get_macgyver_position()
         super().__init__(self.position)
-        self.picked_items = 0
+        self.picked_up_syringe_elements = 0
 
     def move(self, direction):
         if direction == "u":
@@ -26,16 +22,23 @@ class MacGyver(Position):
         elif direction == "r":
             next_position = self.right()
 
-        if self.labyrinth.near_the_guard(next_position):
+        if self.labyrinth.is_a_syringe_element(next_position):
+            self.pick_up_syringe_element()
+            if self.labyrinth.near_the_guard(next_position):
+            # in case a syringe element is right next to the guard : pick_up + fight
+                self.fight_guard()
+                return False
+            self.step(next_position)
+        elif self.labyrinth.near_the_guard(next_position):
             self.step(next_position)
             self.fight_guard()
+            return False
         elif self.labyrinth.is_available(next_position):
             self.step(next_position)
-        elif self.labyrinth.is_an_item(next_position):
-            self.step(next_position)
-            self.pick_up_item()
-        else: # il faut ramener next_position d'une position en arrière
-            print("MacGyver can't move in this direction !")
+
+        else:
+            print("\nMacGyver can't move in this direction !")
+            # next_position needs to be brought one step back
             if direction == "u":
                 next_position = self.down()
             elif direction == "d":
@@ -50,20 +53,21 @@ class MacGyver(Position):
         self.labyrinth.lines_list[self.position[0]][self.position[1]] = " "
         self.position = next_position
 
-    def pick_up_item(self):
-        self.picked_items += 1
+    def pick_up_syringe_element(self):
+        self.picked_up_syringe_elements += 1
+        print("\nMacGyver picked up {} syringe element(s), find {} more !".format(self.picked_up_syringe_elements, 3 - self.picked_up_syringe_elements))
 
     def fight_guard(self):
-        if self.picked_items == 3:
-            print("Congratulations !")
+        if self.picked_up_syringe_elements == 3:
+            print("\nMacGyver managed to escape ... Congratulations !")
         else:
-            print("Game over !")
+            print("\nMacGyver failed to put the guard to sleep ... He's dead !")
 
 
 def main():
     labyrinth = Labyrinth()
     macgyver = MacGyver(labyrinth)
-    print("Picked_items : {}".format(macgyver.picked_items)) # renvoie 0
+    print("Picked_up_syringe_elements : {}".format(macgyver.picked_up_syringe_elements)) # renvoie 0
 # si on prend le "bon" chemin :
     print("Starting position : {}".format(macgyver.position)) # renvoie (1, 0)
     macgyver.move("r")
