@@ -1,8 +1,4 @@
-""" Defines Labyrinth class
-
-...
-
-"""
+""" Defines Labyrinth class. """
 
 import json
 
@@ -52,10 +48,7 @@ class Labyrinth:
                 y += 1
             x += 1
 
-    def is_a_wall(self, position):
-        return self.lines_list[position[0]][position[1]] == "X"
-
-    def is_an_item(self, position):
+    def is_a_syringe_element(self, position):
         return self.lines_list[position[0]][position[1]] in ["N", "T", "E"]
 
     def near_the_guard(self, position):
@@ -75,7 +68,7 @@ def main():
     print(labyrinth.get_macgyver_position()) # renvoie (1, 0)
     print(labyrinth.get_available_positions()) # affiche la liste des positions libres
     print(labyrinth.is_a_wall((1, 8))) # renvoie True
-    print(labyrinth.is_an_item((1, 8))) # renvoie False
+    print(labyrinth.is_a_syringe_element((1, 8))) # renvoie False
     print(labyrinth.near_the_guard((1, 8))) # renvoie False
     print(labyrinth.near_the_guard((3, 13))) # renvoie True
     print(labyrinth.is_available((1, 8))) # renvoie False
