@@ -1,15 +1,18 @@
-""" Defines Items class
-
-This is a child class of Position.
-
-"""
+""" Defines Syringe class. """
 
 import random
 
-from labyrinth import *
+from labyrinth import Labyrinth
 
 
 class Syringe:
+    """ Defines Syringe class.
+
+    The Syringe class consists of 2 methods :
+        - __init__()
+        - dispatch()
+
+    """
     def __init__(self, labyrinth):
         self.labyrinth = labyrinth
         self.syringe_elements = ["N", "T", "E"] # Needle, Tube, Ether
