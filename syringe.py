@@ -1,4 +1,4 @@
-""" Defines Syringe class. """
+""" Sets Syringe class. """
 
 import random
 
@@ -6,7 +6,7 @@ from labyrinth import Labyrinth
 
 
 class Syringe:
-    """ Defines Syringe class.
+    """ Sets Syringe class.
 
     The Syringe class consists of 2 methods :
         - __init__()
@@ -14,6 +14,15 @@ class Syringe:
 
     """
     def __init__(self, labyrinth):
+        """ Syringe constructor.
+
+        Sets a Labyrinth object as an attribute.
+        Sets a list of syringe elements.
+        Calls :
+            - display()
+            - labyrinth.place_syringe_element()
+
+        """
         self.labyrinth = labyrinth
         self.syringe_elements = ["N", "T", "E"] # Needle, Tube, Ether
         self.positions = self.dispatch()
@@ -22,6 +31,7 @@ class Syringe:
             self.labyrinth.place_syringe_element(self.syringe_element, self.position)
 
     def dispatch(self):
+        """ Returns a list of random positions for syringe elements. """
         available_positions = self.labyrinth.get_available_positions()
         return random.sample(available_positions, len(self.syringe_elements))
 

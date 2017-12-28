@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-""" Defines GameText class
+""" Sets GameText class
 
 This class manages the "textual version" of the game "Help MacGyver to
 escape from the labyrinth !"
@@ -17,16 +17,37 @@ from syringe import Syringe
 
 
 class GameText:
+    """ Sets GameText class.
+
+    The GameText class consists of 2 methods :
+        - __init__()
+        - run()
+    It needs Labyrinth, MacGyver and Syringe imported classes.
+
+    """
     def __init__(self):
+        """ GameText constructor.
+
+        Instantiate objects from Labyrinth, MacGyver and Syringe classes.
+
+        """
         self.labyrinth = Labyrinth()
         self.macgyver = MacGyver(self.labyrinth)
         self.syringe = Syringe(self.labyrinth)
 
-    def start(self):
-        continuer = True
-        print("\nHelp MacGyver to escape from the labyrinth : he needs to pick \
-up a needle, a tube and ether before fighting the guard !")
-        while continuer is not False:
+    def run(self):
+        """ Manages the game progress.
+
+        Sets :
+            "carry_on" boolean variable
+            user interaction
+            labyrinth display
+
+        """
+        carry_on = True
+        print("\nHelp MacGyver to escape from the labyrinth : he needs to pick\
+ up a needle, a tube and ether before fighting the guard !")
+        while carry_on is not False:
             self.labyrinth.display()
             user_answer = input("In which direction do you want MacGyver to \
 move ? Please enter 'u' for up, 'd' for down, 'l' for left and 'r' for \
@@ -35,16 +56,16 @@ right, or 'q' to quit : ")
                 print("\nInvalid choice !")
                 continue
             elif user_answer == "q":
-                continuer = False
+                carry_on = False
             else:
-                continuer = self.macgyver.move(user_answer)
-                if not continuer:
+                carry_on = self.macgyver.move(user_answer)
+                if carry_on == False:
                     self.labyrinth.display()
 
 
 def main():
     game = GameText()
-    game.start()
+    game.run()
 
 if __name__ == "__main__":
     main()
