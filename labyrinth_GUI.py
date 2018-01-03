@@ -32,17 +32,17 @@ class Labyrinth:
         """ Display the labyrinth. """
         print()
         for line in self.lines_list:
-            for character in line:
-                print(character, end='')
+            for char in line:
+                print(char, end='')
         print()
 
-    def get_position(self, char):
+    def get_position(self, letter):
         """ Returns a position as a tuple (x, y). """
         x = 0
         for line in self.lines_list:
             y = 0
-            for character in line:
-                if character == char:
+            for char in line:
+                if char == letter:
                     self.position = x, y
                 y += 1
             x += 1
@@ -54,8 +54,8 @@ class Labyrinth:
         x = 0
         for line in self.lines_list:
             y = 0
-            for character in line:
-                if character == "W":
+            for char in line:
+                if char == "W":
                     walls_positions.append((x, y))
                 y += 1
             x += 1
@@ -67,8 +67,8 @@ class Labyrinth:
         x = 0
         for line in self.lines_list:
             y = 0
-            for character in line:
-                if character == " ":
+            for char in line:
+                if char == " ":
                     available_positions.append((x, y))
                 y += 1
             x += 1
@@ -79,7 +79,7 @@ class Labyrinth:
         x = 0
         for line in self.lines_list:
             y = 0
-            for character in line:
+            for char in line:
                 if (x, y) == position:
                     self.lines_list[x][y] = syringe_element
                 y += 1
