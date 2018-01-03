@@ -31,8 +31,8 @@ class Labyrinth:
         """ Display the labyrinth. """
         print()
         for line in self.lines_list:
-            for character in line:
-                print(character, end='')
+            for char in line:
+                print(char, end='')
         print()
 
     def get_macgyver_position(self):
@@ -40,8 +40,8 @@ class Labyrinth:
         x = 0
         for line in self.lines_list:
             y = 0
-            for character in line:
-                if character == "M":
+            for char in line:
+                if char == "M":
                     self.position = x, y
                 y += 1
             x += 1
@@ -53,8 +53,8 @@ class Labyrinth:
         x = 0
         for line in self.lines_list:
             y = 0
-            for character in line:
-                if character == " ":
+            for char in line:
+                if char == " ":
                     available_positions.append((x, y))
                 y += 1
             x += 1
@@ -65,7 +65,7 @@ class Labyrinth:
         x = 0
         for line in self.lines_list:
             y = 0
-            for character in line:
+            for char in line:
                 if (x, y) == position:
                     self.lines_list[x][y] = syringe_element
                 y += 1
