@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-""" Sets GameText class
+""" Sets GameText class.
 
 This class manages the "textual version" of the game "Help MacGyver to
 escape from the labyrinth !"
@@ -22,16 +22,15 @@ class GameText:
     The GameText class consists of 2 methods :
         - __init__()
         - run()
-    It needs Labyrinth, MacGyver and Syringe imported classes.
 
     """
     def __init__(self):
         """ GameText constructor.
 
-        Instantiate objects from Labyrinth, MacGyver and Syringe classes.
+        Instantiates objects from Labyrinth, MacGyver and Syringe classes.
 
         """
-        self.labyrinth = Labyrinth()
+        self.labyrinth = Labyrinth("labyrinth_test.json")
         self.macgyver = MacGyver(self.labyrinth)
         self.syringe = Syringe(self.labyrinth)
 
@@ -52,14 +51,16 @@ class GameText:
             user_answer = input("In which direction do you want MacGyver to \
 move ? Please enter 'u' for up, 'd' for down, 'l' for left and 'r' for \
 right, or 'q' to quit : ")
+            success = None
             if user_answer not in ["q", "u", "d", "l", "r"]:
                 print("\nInvalid choice !")
                 continue
             elif user_answer == "q":
                 carry_on = False
             else:
-                carry_on = self.macgyver.move(user_answer)
-                if carry_on == False:
+                success = self.macgyver.move(user_answer)
+                if success or success == False:
+                    carry_on = False
                     self.labyrinth.display()
 
 
