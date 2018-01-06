@@ -6,10 +6,11 @@ import json
 class Labyrinth:
     """ Sets Labyrinth class.
 
-    The Labyrinth class consists of 8 methods :
+    The Labyrinth class consists of 9 methods :
         - __init__()
         - display()
-        - get_macgyver_position()
+        - get_position()
+        - get_walls_positions()
         - get_available_positions()
         - place_syringe_element()
         - is_a_syringe_element()
@@ -35,69 +36,82 @@ class Labyrinth:
                 print(char, end='')
         print()
 
-    def get_macgyver_position(self):
-        """ Returns MacGyver position. Called by MacGyver constructor. """
-        x = 0
+    def get_position(self, letter):
+        """ Returns a position as a tuple (x, y). """
+        y = 0
         for line in self.lines_list:
-            y = 0
+            x = 0
             for char in line:
-                if char == "M":
+                if char == letter:
                     self.position = x, y
-                y += 1
-            x += 1
+                x += 1
+            y += 1
         return self.position
 
-    def get_available_positions(self):
-        """ Returns a list of available positions. """
-        available_positions = []
-        x = 0
+    def get_walls_positions(self):
+        """ Returns a list of tuples of walls positions. """
+        walls_positions = []
+        y = 0
         for line in self.lines_list:
-            y = 0
+            x = 0
+            for char in line:
+                if char == "W":
+                    walls_positions.append((x, y))
+                x += 1
+            y += 1
+        return walls_positions
+
+    def get_available_positions(self):
+        """ Returns a list of tuples of available positions. """
+        available_positions = []
+        y = 0
+        for line in self.lines_list:
+            x = 0
             for char in line:
                 if char == " ":
                     available_positions.append((x, y))
-                y += 1
-            x += 1
+                x += 1
+            y += 1
         return available_positions
 
     def place_syringe_element(self, syringe_element, position):
         """ Replaces N spaces of the labyrinth with N syringe elements. """
-        x = 0
+        y = 0
         for line in self.lines_list:
-            y = 0
+            x = 0
             for char in line:
                 if (x, y) == position:
-                    self.lines_list[x][y] = syringe_element
-                y += 1
-            x += 1
+                    self.lines_list[y][x] = syringe_element
+                x += 1
+            y += 1
 
     def is_a_syringe_element(self, position):
-        """ Returns whether a syringe element is on this position. """
-        return self.lines_list[position[0]][position[1]] in ["N", "T", "E"]
+        """ Returns syringe element settled on this position. """
+        if self.lines_list[position.y][position.x] in ["N", "T", "E"]:
+            return self.lines_list[position.y][position.x]
 
     def is_near_the_guard(self, position):
-        """ Returns whether the guard is at one step from this position. """
-        return self.lines_list[(position[0] + 1)][position[1]] == "G" or \
-            self.lines_list[(position[0] - 1)][position[1]] == "G" or \
-            self.lines_list[position[0]][(position[1] + 1)] == "G" or \
-            self.lines_list[position[0]][(position[1] - 1)] == "G"
+        """ Returns True if the guard is at one step from this position. """
+        return self.lines_list[position.y][position.x] == "e"
 
     def is_available(self, position):
-        """ Returns whether this position is available (= " "). """
+        """ Returns True if this position is available (== " "). """
         available_positions = self.get_available_positions()
         return position in available_positions
 
 
 def main():
-    labyrinth = Labyrinth()
+    labyrinth = Labyrinth("labyrinth_test.json")
     labyrinth.display() # affiche le labyrinthe (sans les objets)
-    print(labyrinth.get_macgyver_position()) # renvoie (1, 0)
+    print(labyrinth.get_position("M")) # renvoie (1, 0)
     print(labyrinth.get_available_positions()) # affiche la liste des positions libres
-    print(labyrinth.is_a_syringe_element((1, 8))) # renvoie False
-    print(labyrinth.is_near_the_guard((1, 8))) # renvoie False
-    print(labyrinth.is_near_the_guard((3, 13))) # renvoie True
-    print(labyrinth.is_available((1, 8))) # renvoie False
-    print(labyrinth.is_available((1, 2))) # renvoie True
+    print(labyrinth.get_walls_positions()) # affiche la liste des positions des murs
+# On ne peut plus tester avec des tuples !
+    #print(labyrinth.is_a_syringe_element((1, 8))) # renvoie False
+    #print(labyrinth.is_near_the_guard((1, 8))) # renvoie False
+    #print(labyrinth.is_near_the_guard((3, 13))) # renvoie True
+    #print(labyrinth.is_available((1, 8))) # renvoie False
+    #print(labyrinth.is_available((1, 2))) # renvoie True
 
 if __name__ == "__main__":
     main()
