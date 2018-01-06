@@ -1,10 +1,14 @@
-""" Sets MacGyver class, as a child class of Position class."""
+""" Sets MacGyver class.
+
+MacGyver class is imported in gametext.py and gamegui.py files.
+
+"""
 
 from position import Position
 from labyrinth import Labyrinth
 
 
-class MacGyver(Position):
+class MacGyver:
     """ Sets MacGyver class.
 
     The MacGyver class consists of 5 methods :
@@ -13,7 +17,6 @@ class MacGyver(Position):
         - step()
         - pick_up_syringe_element()
         - fight_guard()
-    It uses methods of Position and Labyrinth imported classes.
 
     """
     def __init__(self, labyrinth):
@@ -21,14 +24,12 @@ class MacGyver(Position):
 
         Sets a Labyrinth object as an attribute.
         Sets a starting position, calling labyrinth.get_macgyver_position().
-        Calls Position constructor on position attribute.
-        Initializes a counter for collected syringe elements.
+        Sets an empty list of collected syringe elements.
 
         """
         self.labyrinth = labyrinth
-        self.position = self.labyrinth.get_macgyver_position()
-        super().__init__(self.position)
-        self.collected_syringe_elements = 0
+        self.position = Position(self.labyrinth.get_position("M"))
+        self.collected_syringe_elements = []
 
     def move(self, direction):
         """ Manages MacGyver movements.
@@ -45,92 +46,86 @@ class MacGyver(Position):
             labyrinth.is_a_syringe_element()
             labyrinth.is_near_the_guard()
             labyrinth.is_available()
-        Returns False in case of guard fighting.
+        Returns "success" in case of guard fighting.
 
         """
         if direction == "u":
-            next_position = self.up()
+            next_position = self.position.up()
         elif direction == "d":
-            next_position = self.down()
+            next_position = self.position.down()
         elif direction == "l":
-            next_position = self.left()
+            next_position = self.position.left()
         elif direction == "r":
-            next_position = self.right()
+            next_position = self.position.right()
 
         if self.labyrinth.is_a_syringe_element(next_position):
-            self.pick_up_syringe_element()
-            if self.labyrinth.is_near_the_guard(next_position):
-            # in case a syringe element is right next to the guard : pick_up + fight
-                self.step(next_position)
-                self.fight_guard()
-                return False
+            element = self.labyrinth.is_a_syringe_element(next_position)
+            self.pick_up_syringe_element(element)
             self.step(next_position)
+
         elif self.labyrinth.is_near_the_guard(next_position):
             self.step(next_position)
-            self.fight_guard()
-            return False
-        elif self.labyrinth.is_available(next_position):
+            success = self.fight_guard()
+            return success
+
+        elif self.labyrinth.is_available((next_position.x, next_position.y)):
             self.step(next_position)
 
         else:
             print("\nMacGyver can't move in this direction !")
-            # next_position needs to be brought one step back
-            if direction == "u":
-                next_position = self.down()
-            elif direction == "d":
-                next_position = self.up()
-            elif direction == "l":
-                next_position = self.right()
-            elif direction == "r":
-                next_position = self.left()
 
     def step(self, next_position):
         """ Moves the "M" character on the next position. """
-        self.labyrinth.lines_list[next_position[0]][next_position[1]] = "M"
-        self.labyrinth.lines_list[self.position[0]][self.position[1]] = " "
+        self.labyrinth.lines_list[next_position.y][next_position.x] = "M"
+        self.labyrinth.lines_list[self.position.y][self.position.x] = " "
         self.position = next_position
 
-    def pick_up_syringe_element(self):
-        """ Increments the counter of the collected syringe elements. """
-        self.collected_syringe_elements += 1
-        print("\nMacGyver picked up {} syringe element(s), find {} more !".format(self.collected_syringe_elements, 3 - self.collected_syringe_elements))
+    def pick_up_syringe_element(self, element):
+        """ Add the collected element to the list. """
+        self.collected_syringe_elements.append(element)
+        print("\nMacGyver picked up {} syringe element(s), find {} more !".
+              format(len(self.collected_syringe_elements),
+                     3 - len(self.collected_syringe_elements)))
 
     def fight_guard(self):
         """ End of game : success or failure. """
-        if self.collected_syringe_elements == 3:
+        if len(self.collected_syringe_elements) == 3:
             print("\nMacGyver managed to escape ... Congratulations !")
+            return True
         else:
             print("\nMacGyver failed to put the guard to sleep ... He's dead !")
+            return False
 
 
 def main():
-    labyrinth = Labyrinth()
+
+    labyrinth = Labyrinth("labyrinth_test.json")
     macgyver = MacGyver(labyrinth)
-    print("Collected_syringe_elements : {}".format(macgyver.collected_syringe_elements)) # renvoie 0
+    print("Collected_syringe_elements : {}".format(macgyver.collected_syringe_elements)) # renvoie []
 # si on prend le "bon" chemin :
-    print("Starting position : {}".format(macgyver.position)) # renvoie (1, 0)
+    print("Starting position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (0, 1)
     macgyver.move("r")
-    print("New position : {}".format(macgyver.position)) # renvoie (1, 1)
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (1, 1)
     macgyver.move("r")
-    print("New position : {}".format(macgyver.position)) # renvoie (1, 2)
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (2, 1)
     macgyver.move("d")
-    print("New position : {}".format(macgyver.position)) # renvoie (2, 2)
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (2, 2)
     macgyver.move("d")
-    print("New position : {}".format(macgyver.position)) # renvoie (3, 2)
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (2, 3)
     for i in range(11):
         macgyver.move("r") # renvoie Failure
-    print("New position : {}".format(macgyver.position)) # renvoie (3, 13)
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (13, 3)
 
 # si on envoie MacGyver dans le mur :
-    labyrinth = Labyrinth()
+    labyrinth = Labyrinth("labyrinth_test.json")
     macgyver = MacGyver(labyrinth)
-    print("Starting position : {}".format(macgyver.position)) # renvoie (1, 0)
+    print("Starting position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (0, 1)
     macgyver.move("r")
-    print("New position : {}".format(macgyver.position)) # renvoie (1, 1)
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (1, 1)
     macgyver.move("u")
-    print("New position : {}".format(macgyver.position)) # renvoie "Can't move" (1, 1) 
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie "Can't move" (1, 1)
     macgyver.move("r")
-    print("New position : {}".format(macgyver.position)) # renvoie (1, 2) 
+    print("New position : {}".format((macgyver.position.x, macgyver.position.y))) # renvoie (2, 1)
 
 if __name__ == "__main__":
     main()
