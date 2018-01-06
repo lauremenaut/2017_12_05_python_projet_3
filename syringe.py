@@ -1,4 +1,8 @@
-""" Sets Syringe class. """
+""" Sets Syringe class.
+
+Syringe class is imported in gametext.py and gamegui.py files.
+
+"""
 
 import random
 
@@ -31,13 +35,12 @@ class Syringe:
             self.labyrinth.place_syringe_element(self.syringe_element, self.position)
 
     def dispatch(self):
-        """ Returns a list of random positions for syringe elements. """
+        """ Returns a list of tuples of random positions for syringe elements. """
         available_positions = self.labyrinth.get_available_positions()
         return random.sample(available_positions, len(self.syringe_elements))
 
-
 def main():
-    labyrinth = Labyrinth()
+    labyrinth = Labyrinth("labyrinth_test.json")
     syringe = Syringe(labyrinth)
     print(syringe.positions) # renvoie la liste des 3 positions choisies
     labyrinth.display() # affiche le labyrinthe contenant les 3 objets
