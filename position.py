@@ -1,6 +1,6 @@
 """ Sets Position class.
 
-This is an abstract class and a mother class for MacGyver class.
+Position class is imported in macgyver.py file.
 
 """
 
@@ -22,32 +22,29 @@ class Position:
         self.y = position[1]
 
     def up(self):
-        """ Returns a new position, one step up. """
-        self.x -= 1
-        return self.x, self.y
+        """ Returns a new Position object, one step up. """
+        return Position((self.x, self.y - 1))
 
     def down(self):
-        """ Returns a new position, one step down. """
-        self.x += 1
-        return self.x, self.y
+        """ Returns a new Position object, one step down. """
+        return Position((self.x, self.y + 1))
 
     def left(self):
-        """ Returns a new position, one step left. """
-        self.y -= 1
-        return self.x, self.y
+        """ Returns a new Position object, one step left. """
+        return Position((self.x - 1, self.y))
 
     def right(self):
-        """ Returns a new position, one step right. """
-        self.y += 1
-        return self.x, self.y
+        """ Returns a new Position object, one step right. """
+        return Position((self.x + 1, self.y))
 
 
 def main():
     position = Position((5, 2))
-    print(position.up()) # renvoie (4, 2)
-    print(position.down()) # renvoie (5, 2)
-    print(position.left()) # renvoie (5, 1)
-    print(position.right()) # renvoie (5, 2)
+    print(position.up().x, position.up().y) # renvoie 5, 1
+    print(position.down().x, position.down().y) # renvoie 5, 3
+    print(position.left().x, position.left().y) # renvoie 4, 2
+    print(position.right().x, position.right().y) # renvoie 6, 2
+
 
 if __name__ == "__main__":
     main()
