@@ -1,4 +1,12 @@
-""" Sets Labyrinth class. """
+#! /usr/bin/env python3
+# coding: utf-8
+
+""" Sets Labyrinth class.
+
+Labyrinth class is imported in macgyver.py, syringe.py, gametext.py and
+gamegui.py files.
+
+"""
 
 import json
 
@@ -33,7 +41,10 @@ class Labyrinth:
         print()
         for line in self.lines_list:
             for char in line:
-                print(char, end='')
+                if char != "\n":
+                    print(char, end=' ')
+                else:
+                    print('')
         print()
 
     def get_position(self, letter):
@@ -102,16 +113,13 @@ class Labyrinth:
 
 def main():
     labyrinth = Labyrinth("labyrinth_test.json")
-    labyrinth.display() # affiche le labyrinthe (sans les objets)
-    print(labyrinth.get_position("M")) # renvoie (1, 0)
-    print(labyrinth.get_available_positions()) # affiche la liste des positions libres
-    print(labyrinth.get_walls_positions()) # affiche la liste des positions des murs
-# On ne peut plus tester avec des tuples !
-    #print(labyrinth.is_a_syringe_element((1, 8))) # renvoie False
-    #print(labyrinth.is_near_the_guard((1, 8))) # renvoie False
-    #print(labyrinth.is_near_the_guard((3, 13))) # renvoie True
-    #print(labyrinth.is_available((1, 8))) # renvoie False
-    #print(labyrinth.is_available((1, 2))) # renvoie True
+    labyrinth.display() # displays the labyrinth (without syringe elements)
+    print("Starting position : ", labyrinth.get_position("M")) # returns
+    # (0, 1)
+    print("Available positions : ", labyrinth.get_available_positions())
+    # displays a list of available positions
+    print("Walls positions : ", labyrinth.get_walls_positions()) # displays
+    # a list of walls positions
 
 if __name__ == "__main__":
     main()
