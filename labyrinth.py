@@ -49,52 +49,36 @@ class Labyrinth:
 
     def get_position(self, letter):
         """ Returns a position as a tuple (x, y). """
-        y = 0
-        for line in self.lines_list:
-            x = 0
-            for char in line:
+        for y, line in enumerate(self.lines_list):
+            for x, char in enumerate(line):
                 if char == letter:
                     self.position = x, y
-                x += 1
-            y += 1
         return self.position
 
     def get_walls_positions(self):
         """ Returns a list of tuples of walls positions. """
         walls_positions = []
-        y = 0
-        for line in self.lines_list:
-            x = 0
-            for char in line:
+        for y, line in enumerate(self.lines_list):
+            for x, char in enumerate(line):
                 if char == "W":
                     walls_positions.append((x, y))
-                x += 1
-            y += 1
         return walls_positions
 
     def get_available_positions(self):
         """ Returns a list of tuples of available positions. """
         available_positions = []
-        y = 0
-        for line in self.lines_list:
-            x = 0
-            for char in line:
+        for y, line in enumerate(self.lines_list):
+            for x, char in enumerate(line):
                 if char == " ":
                     available_positions.append((x, y))
-                x += 1
-            y += 1
         return available_positions
 
     def place_syringe_element(self, syringe_element, position):
         """ Replaces N spaces of the labyrinth with N syringe elements. """
-        y = 0
-        for line in self.lines_list:
-            x = 0
-            for char in line:
+        for y, line in enumerate(self.lines_list):
+            for x, char in enumerate(line):
                 if (x, y) == position:
                     self.lines_list[y][x] = syringe_element
-                x += 1
-            y += 1
 
     def is_a_syringe_element(self, position):
         """ Returns syringe element settled on this position. """
@@ -113,12 +97,12 @@ class Labyrinth:
 
 def main():
     labyrinth = Labyrinth("labyrinth_test.json")
-    labyrinth.display() # displays the labyrinth (without syringe elements)
-    print("Starting position : ", labyrinth.get_position("M")) # returns
+    labyrinth.display()  # displays the labyrinth (without syringe elements)
+    print("Starting position : ", labyrinth.get_position("M"))  # returns
     # (0, 1)
     print("Available positions : ", labyrinth.get_available_positions())
     # displays a list of available positions
-    print("Walls positions : ", labyrinth.get_walls_positions()) # displays
+    print("Walls positions : ", labyrinth.get_walls_positions())  # displays
     # a list of walls positions
 
 if __name__ == "__main__":
