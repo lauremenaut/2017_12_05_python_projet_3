@@ -50,12 +50,14 @@ class GameGUI:
 labyrinth !")
 
         # Background
-        background = pygame.image.load("images/background_800_545.jpg").convert()
+        background = pygame.image.load(
+            "images/background_800_545.jpg").convert()
         window.blit(background, (0, 0))
         window.blit(background, (0, 100))
 
         # MacGyver
-        macgyver = pygame.image.load("images/macgyver_32_40.png").convert_alpha()
+        macgyver = pygame.image.load(
+            "images/macgyver_32_40.png").convert_alpha()
         macgyver_position = self.labyrinth.get_position("M")
         window.blit(macgyver, (macgyver_position[0] * 40 + 4,
                                macgyver_position[1] * 40))
@@ -149,12 +151,14 @@ labyrinth !")
 
             # 'success' becomes True or False after fighting the guard
             if success:
-                you_win = pygame.image.load("images/you_win_200_200.png").convert()
+                you_win = pygame.image.load(
+                    "images/you_win_200_200.png").convert()
                 window.blit(you_win, (200, 200))
                 pygame.display.flip()
                 carry_on = False
             elif success == False:
-                game_over = pygame.image.load("images/game_over_320_256.jpg").convert()
+                game_over = pygame.image.load(
+                    "images/game_over_320_256.jpg").convert()
                 window.blit(game_over, (140, 172))
                 pygame.display.flip()
                 carry_on = False
