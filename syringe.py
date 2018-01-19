@@ -31,7 +31,7 @@ class Syringe:
 
         """
         self.labyrinth = labyrinth
-        self.syringe_elements = ["N", "T", "E"] # Needle, Tube, Ether
+        self.syringe_elements = ["N", "T", "E"]  # Needle, Tube, Ether
         self.positions = self.dispatch()
         # Assigns a position to each element
         for self.syringe_element, self.position in zip(self.syringe_elements,
@@ -48,9 +48,9 @@ class Syringe:
 def main():
     labyrinth = Labyrinth("labyrinth_test.json")
     syringe = Syringe(labyrinth)
-    print("Syringe elements positions : ", syringe.positions) # returns a list
+    print("Syringe elements positions : ", syringe.positions)  # returns a list
     # of random available positions
-    labyrinth.display() # displays the labyrinth (with the syringe elements)
+    labyrinth.display()  # displays the labyrinth (with the syringe elements)
 
 if __name__ == "__main__":
     main()

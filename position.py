@@ -43,10 +43,10 @@ class Position:
 
 def main():
     position = Position((5, 2))
-    print("up(5, 2) : ", position.up().x, position.up().y) # returns 5 1
-    print("down(5, 2) : ", position.down().x, position.down().y) # returns 5 3
-    print("left(5, 2) : ", position.left().x, position.left().y) # returns 4 2
-    print("right(5, 2) : ", position.right().x, position.right().y) # returns
+    print("up(5, 2) : ", position.up().x, position.up().y)  # returns 5 1
+    print("down(5, 2) : ", position.down().x, position.down().y)  # returns 5 3
+    print("left(5, 2) : ", position.left().x, position.left().y)  # returns 4 2
+    print("right(5, 2) : ", position.right().x, position.right().y)  # returns
     # 6 2
 
 if __name__ == "__main__":

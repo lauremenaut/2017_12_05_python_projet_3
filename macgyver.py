@@ -111,29 +111,29 @@ def main():
     labyrinth = Labyrinth("labyrinth_test.json")
     macgyver = MacGyver(labyrinth)
     print("Collected_syringe_elements : {}".
-          format(macgyver.collected_syringe_elements)) # returns []
+          format(macgyver.collected_syringe_elements))  # returns []
     print("Starting position : {}".
-          format((macgyver.position.x, macgyver.position.y))) # returns (0, 1)
+          format((macgyver.position.x, macgyver.position.y)))  # returns (0, 1)
     macgyver.move("r")
     print("New position : {}".
-          format((macgyver.position.x, macgyver.position.y))) # returns (1, 1)
+          format((macgyver.position.x, macgyver.position.y)))  # returns (1, 1)
     macgyver.move("r")
     print("New position : {}".
-          format((macgyver.position.x, macgyver.position.y))) # returns (2, 1)
+          format((macgyver.position.x, macgyver.position.y)))  # returns (2, 1)
     macgyver.move("r")
     print("New position : {}".
-          format((macgyver.position.x, macgyver.position.y))) # returns "Can't
+          format((macgyver.position.x, macgyver.position.y)))  # returns "Can't
           # move ..." then (2, 1)
     macgyver.move("d")
     print("New position : {}".
-          format((macgyver.position.x, macgyver.position.y))) # returns (2, 2)
+          format((macgyver.position.x, macgyver.position.y)))  # returns (2, 2)
     macgyver.move("d")
     print("New position : {}".
-          format((macgyver.position.x, macgyver.position.y))) # returns (2, 3)
+          format((macgyver.position.x, macgyver.position.y)))  # returns (2, 3)
     for i in range(11):
-        macgyver.move("r") # returns "MacGyver failed ..."
+        macgyver.move("r")  # returns "MacGyver failed ..."
     print("New position : {}".
-          format((macgyver.position.x, macgyver.position.y))) # returns (13, 3)
+          format((macgyver.position.x, macgyver.position.y)))  # returns (13, 3)
 
 if __name__ == "__main__":
     main()
